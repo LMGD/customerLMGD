@@ -25,7 +25,6 @@ public class SysUserController {
     public String load(SysUser user, HttpSession session){
         String usrName=user.getUsrName();
         SysUser sysUser = this.sysUserMapper.selectByPrimaryKey(usrName);
-        System.out.println("jsp-user-sbsbs:"+sysUser);
 
         //usr_id、usr_name、
         if(null!=sysUser&&sysUser.getUsrPassword().trim().equals(user.getUsrPassword())){//登录成功
@@ -34,7 +33,6 @@ public class SysUserController {
             session.setAttribute("usrId",sysUser.getUsrId());
             session.setAttribute("usrName",usrName);
             session.setAttribute("roleId",roleId);
-            System.out.println("forward-user-sbsbs:"+sysUser);
             return "redirect:toMain";//登录成功--》跳到主页面
            // return "redirect:listChance?roleId="+roleId+"&usrId="+usrId+"&usrName="+usrName;
         }

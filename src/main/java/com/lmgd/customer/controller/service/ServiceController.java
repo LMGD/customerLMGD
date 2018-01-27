@@ -101,7 +101,7 @@ public class ServiceController {
         //销售主管(roleId=2),对客户服务进行分配。
         long roleId=(Long) request.getSession().getAttribute("roleId");
         if(roleId==3||roleId==4){//roleId>2的为‘客户经理 ’‘高管’
-            request.getSession().setAttribute("message","你没有此权限！！");
+            request.setAttribute("message","你没有此权限！！");
             return "redirect:doListService";//跳到'营销机会管理List'
         }
         /**

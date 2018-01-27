@@ -52,7 +52,7 @@ public class ChanceController {
         //销售主管(roleId=2),才有指派功能。
         long roleId=(Long) request.getSession().getAttribute("roleId");
         if(roleId==3||roleId==4){//roleId>2的为‘客户经理 ’‘高管’
-            request.getSession().setAttribute("message","你没有此权限！！");
+            request.setAttribute("message","你没有此权限！！");
             return "redirect:listChance";//跳到'营销机会管理List'
         }
         salChance.setChcDueDate(new Timestamp(System.currentTimeMillis()));

@@ -61,7 +61,12 @@
 
 <body>
   <!-- 1:布局 easyui-layout -->
-  <div id="cc" class="easyui-layout" style="width:99%;height:100%;">
+  <div style="height:20px;padding-left: 800px; ">
+        尊敬的：${usrName}用户你好！！
+	    &nbsp;<a href="toLoadJsp">登录</a>
+  </div>
+
+  <div id="cc" class="easyui-layout" style="width:99%;height:90%;">
     <div data-options="region:'west',split:true,title:'导航菜单', fit:false" style="width:200px;">
         <!-- 2:左边的布局 嵌一个手风琴 easyui-accordion -->
 			<div id="aa" class="easyui-accordion"
