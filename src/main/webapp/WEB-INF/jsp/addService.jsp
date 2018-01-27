@@ -11,7 +11,7 @@
 
 <body>
 <div style="margin:20px 0;"></div>
-<div class="easyui-panel" title="新增服务" style="width:80%;height: 60%">
+<div class="easyui-panel" title="新增服务" style="width:80%;height: 80%">
     <div style="padding:10px 60px 20px 60px">
         <form id="ff" action="doAddService" method="post">
             <table cellpadding="5">
