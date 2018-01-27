@@ -60,17 +60,6 @@
                         <span style="color: red">*</span>
                     </td>
                 </tr>
-              <%--<tr>
-                    <td>
-                     &lt;%&ndash; 这样写了，值也带不过去。！！！&ndash;%&gt;
-                        创建人名字:
-                        <input class="easyui-textbox" type="hidden" name="chcCreateId" value="3" ></input>
-                    </td>
-                    <td>
-                        <input class="easyui-textbox" type="text" name="chcCreateBy" value="小客" ></input>
-                        <span style="color: red">*(根据你登录查出来的，自带)</span>
-                    </td>
-                </tr>--%>
                 <tr>
                     <td>
                     </td>

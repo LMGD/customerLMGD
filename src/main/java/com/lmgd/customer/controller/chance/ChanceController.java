@@ -74,10 +74,12 @@ public class ChanceController {
     //add
     //chcSource、chcCustName、chcRate、chcTitle、chcLinkman、chcTel、chcDesc、chcCreateId、chcCreateBy
     @RequestMapping("/doAddChance")
-    public String doAddChance(SalChance salChance){
+    public String doAddChance(SalChance salChance,HttpServletRequest request){
         //chc_create_id创建人ID、chc_create_by创建人名字,系统用户登入进来就取出来。
-        salChance.setChcCreateId(3L);
-        salChance.setChcCreateBy("小客");
+        Long  usrId=(Long) request.getSession().getAttribute("usrId");
+        String  usrName=(String) request.getSession().getAttribute("usrName");
+        salChance.setChcCreateId(usrId);
+        salChance.setChcCreateBy(usrName);
 
         this.salChanceBiz.insert(salChance);
         return "redirect:toAddJsp";
