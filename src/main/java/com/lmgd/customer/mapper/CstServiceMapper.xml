@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgd.customer.mapper.CstServiceMapper" >
+  <resultMap id="BaseResultMap" type="com.lmgd.customer.model.CstService" >
+      <id column="svr_id" property="svrId" javaType="java.lang.Long" />
+      <result column="svr_type" property="svrType" javaType="java.lang.String" />
+      <result column="svr_title" property="svrTitle" javaType="java.lang.String" />
+      <result column="svr_cust_name" property="svrCustName" javaType="java.lang.String" />
+      <result column="svr_status" property="svrStatus" javaType="java.lang.String" />
+      <result column="svr_request" property="svrRequest" javaType="java.lang.String" />
+
+      <result column="svr_create_by" property="svrCreateBy" javaType="java.lang.String" />
+      <result column="svr_create_date" property="svrCreateDate" javaType="java.sql.Timestamp" />
+      <result column="svr_due_date" property="svrDueDate" javaType="java.sql.Timestamp" />
+     <result column="svr_deal_by" property="svrDealBy" javaType="java.lang.String" />
+  </resultMap>
+
+  <resultMap id="row" type="com.lmgd.customer.model.CstService" >
+      <id column="svr_id" property="svrId" javaType="java.lang.Long" />
+      <result column="svr_type" property="svrType" javaType="java.lang.String" />
+      <result column="svr_title" property="svrTitle" javaType="java.lang.String" />
+      <result column="svr_cust_name" property="svrCustName" javaType="java.lang.String" />
+
+      <result column="svr_status" property="svrStatus" javaType="java.lang.String" />
+      <result column="svr_create_by" property="svrCreateBy" javaType="java.lang.String" />
+      <result column="svr_create_date" property="svrCreateDate" javaType="java.sql.Timestamp" />
+      <result column="svr_deal_id" property="svrDealId" javaType="java.lang.Long" />
+      <result column="svr_satisfy" property="svrSatisfy" javaType="java.lang.String" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    svr_id, svr_type, svr_title, svr_cust_no, svr_cust_name, svr_status, svr_request, 
+    svr_create_id, svr_create_by, svr_create_date, svr_due_id, svr_due_to, svr_due_date, 
+    svr_deal, svr_deal_id, svr_deal_by, svr_deal_date, svr_result, svr_satisfy
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+        svr_id, svr_type, svr_title, svr_cust_name, svr_status, svr_request,
+        svr_create_by, svr_create_date,svr_due_to,svr_due_date,svr_deal_by
+    from cst_service
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </select>
+  <select id="list" resultMap="row" parameterType="com.lmgd.customer.model.CstService" >
+    select
+         svr_id, svr_type, svr_title, svr_cust_name, svr_status,
+         svr_create_by, svr_create_date,svr_deal_id,svr_satisfy
+    from cst_service
+    where 1=1
+    <if test="svrType != null and svrType !=''" >
+       and svr_type like concat('%',#{svrType,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="svrStatus != null and svrStatus !='' " >
+       and svr_status like concat('%',#{svrStatus,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="svrDealId != null  " >
+       and svr_deal_id = #{svrDealId,jdbcType=BIGINT}
+    </if>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cst_service
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lmgd.customer.model.CstService" >
+    insert into cst_service (svr_id, svr_type, svr_title, 
+      svr_cust_no, svr_cust_name,
+      svr_request, svr_create_id, svr_create_by, 
+      svr_create_date)
+
+    values (#{svrId,jdbcType=BIGINT}, #{svrType,jdbcType=VARCHAR}, #{svrTitle,jdbcType=VARCHAR}, 
+      #{svrCustNo,jdbcType=VARCHAR}, #{svrCustName,jdbcType=VARCHAR},
+      #{svrRequest,jdbcType=VARCHAR}, #{svrCreateId,jdbcType=BIGINT}, #{svrCreateBy,jdbcType=VARCHAR}, 
+      #{svrCreateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmgd.customer.model.CstService" >
+    insert into cst_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="svrId != null" >
+        svr_id,
+      </if>
+      <if test="svrType != null" >
+        svr_type,
+      </if>
+      <if test="svrTitle != null" >
+        svr_title,
+      </if>
+      <if test="svrCustNo != null" >
+        svr_cust_no,
+      </if>
+      <if test="svrCustName != null" >
+        svr_cust_name,
+      </if>
+      <if test="svrStatus != null" >
+        svr_status,
+      </if>
+      <if test="svrRequest != null" >
+        svr_request,
+      </if>
+      <if test="svrCreateId != null" >
+        svr_create_id,
+      </if>
+      <if test="svrCreateBy != null" >
+        svr_create_by,
+      </if>
+      <if test="svrCreateDate != null" >
+        svr_create_date,
+      </if>
+      <if test="svrDueId != null" >
+        svr_due_id,
+      </if>
+      <if test="svrDueTo != null" >
+        svr_due_to,
+      </if>
+      <if test="svrDueDate != null" >
+        svr_due_date,
+      </if>
+      <if test="svrDeal != null" >
+        svr_deal,
+      </if>
+      <if test="svrDealId != null" >
+        svr_deal_id,
+      </if>
+      <if test="svrDealBy != null" >
+        svr_deal_by,
+      </if>
+      <if test="svrDealDate != null" >
+        svr_deal_date,
+      </if>
+      <if test="svrResult != null" >
+        svr_result,
+      </if>
+      <if test="svrSatisfy != null" >
+        svr_satisfy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="svrId != null" >
+        #{svrId,jdbcType=BIGINT},
+      </if>
+      <if test="svrType != null" >
+        #{svrType,jdbcType=VARCHAR},
+      </if>
+      <if test="svrTitle != null" >
+        #{svrTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCustNo != null" >
+        #{svrCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCustName != null" >
+        #{svrCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="svrStatus != null" >
+        #{svrStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="svrRequest != null" >
+        #{svrRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCreateId != null" >
+        #{svrCreateId,jdbcType=BIGINT},
+      </if>
+      <if test="svrCreateBy != null" >
+        #{svrCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCreateDate != null" >
+        #{svrCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="svrDueId != null" >
+        #{svrDueId,jdbcType=BIGINT},
+      </if>
+      <if test="svrDueTo != null" >
+        #{svrDueTo,jdbcType=VARCHAR},
+      </if>
+      <if test="svrDueDate != null" >
+        #{svrDueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="svrDeal != null" >
+        #{svrDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="svrDealId != null" >
+        #{svrDealId,jdbcType=BIGINT},
+      </if>
+      <if test="svrDealBy != null" >
+        #{svrDealBy,jdbcType=VARCHAR},
+      </if>
+      <if test="svrDealDate != null" >
+        #{svrDealDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="svrResult != null" >
+        #{svrResult,jdbcType=VARCHAR},
+      </if>
+      <if test="svrSatisfy != null" >
+        #{svrSatisfy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmgd.customer.model.CstService" >
+    update cst_service
+    <set >
+      <if test="svrType != null" >
+        svr_type = #{svrType,jdbcType=VARCHAR},
+      </if>
+      <if test="svrTitle != null" >
+        svr_title = #{svrTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCustNo != null" >
+        svr_cust_no = #{svrCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCustName != null" >
+        svr_cust_name = #{svrCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="svrStatus != null" >
+        svr_status = #{svrStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="svrRequest != null" >
+        svr_request = #{svrRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCreateId != null" >
+        svr_create_id = #{svrCreateId,jdbcType=BIGINT},
+      </if>
+      <if test="svrCreateBy != null" >
+        svr_create_by = #{svrCreateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="svrCreateDate != null" >
+        svr_create_date = #{svrCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="svrDueId != null" >
+        svr_due_id = #{svrDueId,jdbcType=BIGINT},
+      </if>
+      <if test="svrDueTo != null" >
+        svr_due_to = #{svrDueTo,jdbcType=VARCHAR},
+      </if>
+      <if test="svrDueDate != null" >
+        svr_due_date = #{svrDueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="svrDeal != null" >
+        svr_deal = #{svrDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="svrDealId != null" >
+        svr_deal_id = #{svrDealId,jdbcType=BIGINT},
+      </if>
+      <if test="svrDealBy != null" >
+        svr_deal_by = #{svrDealBy,jdbcType=VARCHAR},
+      </if>
+      <if test="svrDealDate != null" >
+        svr_deal_date = #{svrDealDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="svrResult != null" >
+        svr_result = #{svrResult,jdbcType=VARCHAR},
+      </if>
+      <if test="svrSatisfy != null" >
+        svr_satisfy = #{svrSatisfy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lmgd.customer.model.CstService" >
+    update cst_service
+    set svr_type = #{svrType,jdbcType=VARCHAR},
+      svr_title = #{svrTitle,jdbcType=VARCHAR},
+      svr_cust_no = #{svrCustNo,jdbcType=VARCHAR},
+      svr_cust_name = #{svrCustName,jdbcType=VARCHAR},
+      svr_status = #{svrStatus,jdbcType=VARCHAR},
+      svr_request = #{svrRequest,jdbcType=VARCHAR},
+      svr_create_id = #{svrCreateId,jdbcType=BIGINT},
+      svr_create_by = #{svrCreateBy,jdbcType=VARCHAR},
+      svr_create_date = #{svrCreateDate,jdbcType=TIMESTAMP},
+      svr_due_id = #{svrDueId,jdbcType=BIGINT},
+      svr_due_to = #{svrDueTo,jdbcType=VARCHAR},
+      svr_due_date = #{svrDueDate,jdbcType=TIMESTAMP},
+      svr_deal = #{svrDeal,jdbcType=VARCHAR},
+      svr_deal_id = #{svrDealId,jdbcType=BIGINT},
+      svr_deal_by = #{svrDealBy,jdbcType=VARCHAR},
+      svr_deal_date = #{svrDealDate,jdbcType=TIMESTAMP},
+      svr_result = #{svrResult,jdbcType=VARCHAR},
+      svr_satisfy = #{svrSatisfy,jdbcType=VARCHAR}
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="edit_doShare" parameterType="com.lmgd.customer.model.CstService" >
+    update cst_service
+    set
+    svr_status='已分配',
+    svr_due_id = #{svrDueId,jdbcType=BIGINT},
+    svr_due_to = #{svrDueTo,jdbcType=VARCHAR},
+    svr_due_date = #{svrDueDate,jdbcType=TIMESTAMP},
+    svr_deal_id = #{svrDealId,jdbcType=BIGINT},
+    svr_deal_by = #{svrDealBy,jdbcType=VARCHAR}
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="doDealService" parameterType="com.lmgd.customer.model.CstService" >
+    update cst_service
+    set
+    svr_deal= #{svrDeal,jdbcType=VARCHAR},
+    svr_deal_date = #{svrDealDate,jdbcType=TIMESTAMP}
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="editService_isDeal" parameterType="com.lmgd.customer.model.CstService" >
+    update cst_service
+    set
+    svr_status= '已处理'
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="doReturnService" parameterType="com.lmgd.customer.model.CstService" >
+    update cst_service
+    set
+    svr_result = #{svrResult,jdbcType=VARCHAR},
+    svr_satisfy = #{svrSatisfy,jdbcType=VARCHAR}
+    where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="edit_serviceCome" parameterType="com.lmgd.customer.model.CstService">
+     update cst_service
+     set svr_status='已归档'
+     where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="edit_serviceNewCre" parameterType="com.lmgd.customer.model.CstService">
+     update cst_service
+     set svr_status='新创建',svr_due_id=null,svr_due_to=null,svr_due_date=null,
+         svr_deal=null,svr_deal_id=null,svr_deal_by=null,svr_deal_date=null,svr_result=null,svr_satisfy=null
+     where svr_id = #{svrId,jdbcType=BIGINT}
+  </update>
+</mapper>

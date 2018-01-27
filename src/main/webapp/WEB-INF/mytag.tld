@@ -1,0 +1,29 @@
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+   "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<!-- 标签库描述符 -->
+<taglib xmlns="http://java.sun.com/JSP/TagLibraryDescriptor">
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>Simple Tags</short-name>
+	<uri>/veryedu</uri>
+  
+    <!-- 创建自定义标签 第2步: -->
+	<!-- 生命周期标签 -->
+	<tag>
+		<!-- page 分页标签 标签名  随便填的 填你要做的标签-->
+		<name>page</name>
+		<!-- 标签助手类 填完整类名 -->
+		<tag-class>com.lmgd.customer.tag.ui.PageTag</tag-class>
+		<!-- 标签的内容类型：empty表示空标签，jsp表示可以为任何合法的JSP元素 -->
+		<body-content>empty</body-content>
+		<attribute>
+		   <!--属性名 必须与助手类属性名一致 -->
+		   <name>pageBean</name>
+		   <!-- true必须的，false允许空  test可以为空吗?true必须要填 -->
+		   <required>true</required>
+		   <!-- 是否接受表达式作为值：true接受，false不授受 -->
+		   <rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

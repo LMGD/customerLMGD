@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgd.customer.mapper.SysTreeNodeMapper" >
+  <!-- 暂时用 cache缓存 -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+    </cache>
+
+  <resultMap id="BaseResultMap" type="com.lmgd.customer.model.SysTreeNode" >
+    <constructor >
+      <idArg column="tree_node_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="tree_node_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tree_node_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="position" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="parent_node_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="url" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="row" type="com.lmgd.customer.model.SysTreeNode" >
+      <id column="tree_node_id" property="treeNodeId" javaType="java.lang.Integer" />
+      <result column="tree_node_name" property="treeNodeName" javaType="java.lang.String" />
+      <result column="tree_node_type" property="treeNodeType" javaType="java.lang.Integer" />
+      <result column="position"  property="position" javaType="java.lang.Long" />
+      <result column="parent_node_id" property="parentNodeId" javaType="java.lang.Integer" />
+      <result column="url" property="url" javaType="java.lang.String" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    tree_node_id, tree_node_name, tree_node_type, position, parent_node_id, url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_tree_node
+    where tree_node_id = #{treeNodeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="list" resultMap="row" parameterType="com.lmgd.customer.model.SysTreeNode" >
+    select *
+    from t_sys_tree_node
+    where 1=1
+    <if test="parentNodeId != null" >
+      and parent_node_id = #{parentNodeId,jdbcType=INTEGER}
+    </if>
+    <if test="parentNodeId == null" >
+      and parent_node_id is null
+    </if>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sys_tree_node
+    where tree_node_id = #{treeNodeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lmgd.customer.model.SysTreeNode" >
+    insert into t_sys_tree_node (tree_node_id, tree_node_name, tree_node_type, 
+      position, parent_node_id, url
+      )
+    values (#{treeNodeId,jdbcType=INTEGER}, #{treeNodeName,jdbcType=VARCHAR}, #{treeNodeType,jdbcType=INTEGER}, 
+      #{position,jdbcType=BIGINT}, #{parentNodeId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmgd.customer.model.SysTreeNode" >
+    insert into t_sys_tree_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="treeNodeId != null" >
+        tree_node_id,
+      </if>
+      <if test="treeNodeName != null" >
+        tree_node_name,
+      </if>
+      <if test="treeNodeType != null" >
+        tree_node_type,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="parentNodeId != null" >
+        parent_node_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="treeNodeId != null" >
+        #{treeNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="treeNodeName != null" >
+        #{treeNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="treeNodeType != null" >
+        #{treeNodeType,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=BIGINT},
+      </if>
+      <if test="parentNodeId != null" >
+        #{parentNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmgd.customer.model.SysTreeNode" >
+    update t_sys_tree_node
+    <set >
+      <if test="treeNodeName != null" >
+        tree_node_name = #{treeNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="treeNodeType != null" >
+        tree_node_type = #{treeNodeType,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=BIGINT},
+      </if>
+      <if test="parentNodeId != null" >
+        parent_node_id = #{parentNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tree_node_id = #{treeNodeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lmgd.customer.model.SysTreeNode" >
+    update t_sys_tree_node
+    set tree_node_name = #{treeNodeName,jdbcType=VARCHAR},
+      tree_node_type = #{treeNodeType,jdbcType=INTEGER},
+      position = #{position,jdbcType=BIGINT},
+      parent_node_id = #{parentNodeId,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where tree_node_id = #{treeNodeId,jdbcType=INTEGER}
+  </update>
+</mapper>

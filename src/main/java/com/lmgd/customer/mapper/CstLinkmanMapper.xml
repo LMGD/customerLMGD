@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgd.customer.mapper.CstLinkmanMapper" >
+  <resultMap id="BaseResultMap" type="com.lmgd.customer.model.CstLinkman" >
+    <constructor >
+      <idArg column="lkm_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="lkm_cust_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_cust_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_postion" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_mobile" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lkm_memo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lkm_id, lkm_cust_no, lkm_cust_name, lkm_name, lkm_sex, lkm_postion, lkm_tel, lkm_mobile, 
+    lkm_memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cst_linkman
+    where lkm_id = #{lkmId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cst_linkman
+    where lkm_id = #{lkmId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lmgd.customer.model.CstLinkman" >
+    insert into cst_linkman (lkm_id, lkm_cust_no, lkm_cust_name, 
+      lkm_name, lkm_sex, lkm_postion, 
+      lkm_tel, lkm_mobile, lkm_memo
+      )
+    values (#{lkmId,jdbcType=BIGINT}, #{lkmCustNo,jdbcType=VARCHAR}, #{lkmCustName,jdbcType=VARCHAR}, 
+      #{lkmName,jdbcType=VARCHAR}, #{lkmSex,jdbcType=VARCHAR}, #{lkmPostion,jdbcType=VARCHAR}, 
+      #{lkmTel,jdbcType=VARCHAR}, #{lkmMobile,jdbcType=VARCHAR}, #{lkmMemo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmgd.customer.model.CstLinkman" >
+    insert into cst_linkman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lkmId != null" >
+        lkm_id,
+      </if>
+      <if test="lkmCustNo != null" >
+        lkm_cust_no,
+      </if>
+      <if test="lkmCustName != null" >
+        lkm_cust_name,
+      </if>
+      <if test="lkmName != null" >
+        lkm_name,
+      </if>
+      <if test="lkmSex != null" >
+        lkm_sex,
+      </if>
+      <if test="lkmPostion != null" >
+        lkm_postion,
+      </if>
+      <if test="lkmTel != null" >
+        lkm_tel,
+      </if>
+      <if test="lkmMobile != null" >
+        lkm_mobile,
+      </if>
+      <if test="lkmMemo != null" >
+        lkm_memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lkmId != null" >
+        #{lkmId,jdbcType=BIGINT},
+      </if>
+      <if test="lkmCustNo != null" >
+        #{lkmCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmCustName != null" >
+        #{lkmCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmName != null" >
+        #{lkmName,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmSex != null" >
+        #{lkmSex,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmPostion != null" >
+        #{lkmPostion,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmTel != null" >
+        #{lkmTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmMobile != null" >
+        #{lkmMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmMemo != null" >
+        #{lkmMemo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmgd.customer.model.CstLinkman" >
+    update cst_linkman
+    <set >
+      <if test="lkmCustNo != null" >
+        lkm_cust_no = #{lkmCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmCustName != null" >
+        lkm_cust_name = #{lkmCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmName != null" >
+        lkm_name = #{lkmName,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmSex != null" >
+        lkm_sex = #{lkmSex,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmPostion != null" >
+        lkm_postion = #{lkmPostion,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmTel != null" >
+        lkm_tel = #{lkmTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmMobile != null" >
+        lkm_mobile = #{lkmMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="lkmMemo != null" >
+        lkm_memo = #{lkmMemo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lkm_id = #{lkmId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lmgd.customer.model.CstLinkman" >
+    update cst_linkman
+    set lkm_cust_no = #{lkmCustNo,jdbcType=VARCHAR},
+      lkm_cust_name = #{lkmCustName,jdbcType=VARCHAR},
+      lkm_name = #{lkmName,jdbcType=VARCHAR},
+      lkm_sex = #{lkmSex,jdbcType=VARCHAR},
+      lkm_postion = #{lkmPostion,jdbcType=VARCHAR},
+      lkm_tel = #{lkmTel,jdbcType=VARCHAR},
+      lkm_mobile = #{lkmMobile,jdbcType=VARCHAR},
+      lkm_memo = #{lkmMemo,jdbcType=VARCHAR}
+    where lkm_id = #{lkmId,jdbcType=BIGINT}
+  </update>
+</mapper>

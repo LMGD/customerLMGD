@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgd.customer.mapper.CstLostMapper" >
+  <resultMap id="BaseResultMap" type="com.lmgd.customer.model.CstLost" >
+    <constructor >
+      <idArg column="lst_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="lst_cust_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lst_cust_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lst_cust_manager_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="lst_cust_manager_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lst_last_order_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="lst_lost_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="lst_delay" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lst_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="lst_status" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lst_id, lst_cust_no, lst_cust_name, lst_cust_manager_id, lst_cust_manager_name, lst_last_order_date, 
+    lst_lost_date, lst_delay, lst_reason, lst_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cst_lost
+    where lst_id = #{lstId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cst_lost
+    where lst_id = #{lstId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lmgd.customer.model.CstLost" >
+    insert into cst_lost (lst_id, lst_cust_no, lst_cust_name, 
+      lst_cust_manager_id, lst_cust_manager_name, lst_last_order_date, 
+      lst_lost_date, lst_delay, lst_reason, 
+      lst_status)
+    values (#{lstId,jdbcType=BIGINT}, #{lstCustNo,jdbcType=VARCHAR}, #{lstCustName,jdbcType=VARCHAR}, 
+      #{lstCustManagerId,jdbcType=BIGINT}, #{lstCustManagerName,jdbcType=VARCHAR}, #{lstLastOrderDate,jdbcType=TIMESTAMP}, 
+      #{lstLostDate,jdbcType=TIMESTAMP}, #{lstDelay,jdbcType=VARCHAR}, #{lstReason,jdbcType=VARCHAR}, 
+      #{lstStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmgd.customer.model.CstLost" >
+    insert into cst_lost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lstId != null" >
+        lst_id,
+      </if>
+      <if test="lstCustNo != null" >
+        lst_cust_no,
+      </if>
+      <if test="lstCustName != null" >
+        lst_cust_name,
+      </if>
+      <if test="lstCustManagerId != null" >
+        lst_cust_manager_id,
+      </if>
+      <if test="lstCustManagerName != null" >
+        lst_cust_manager_name,
+      </if>
+      <if test="lstLastOrderDate != null" >
+        lst_last_order_date,
+      </if>
+      <if test="lstLostDate != null" >
+        lst_lost_date,
+      </if>
+      <if test="lstDelay != null" >
+        lst_delay,
+      </if>
+      <if test="lstReason != null" >
+        lst_reason,
+      </if>
+      <if test="lstStatus != null" >
+        lst_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lstId != null" >
+        #{lstId,jdbcType=BIGINT},
+      </if>
+      <if test="lstCustNo != null" >
+        #{lstCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lstCustName != null" >
+        #{lstCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="lstCustManagerId != null" >
+        #{lstCustManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="lstCustManagerName != null" >
+        #{lstCustManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="lstLastOrderDate != null" >
+        #{lstLastOrderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lstLostDate != null" >
+        #{lstLostDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lstDelay != null" >
+        #{lstDelay,jdbcType=VARCHAR},
+      </if>
+      <if test="lstReason != null" >
+        #{lstReason,jdbcType=VARCHAR},
+      </if>
+      <if test="lstStatus != null" >
+        #{lstStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmgd.customer.model.CstLost" >
+    update cst_lost
+    <set >
+      <if test="lstCustNo != null" >
+        lst_cust_no = #{lstCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lstCustName != null" >
+        lst_cust_name = #{lstCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="lstCustManagerId != null" >
+        lst_cust_manager_id = #{lstCustManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="lstCustManagerName != null" >
+        lst_cust_manager_name = #{lstCustManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="lstLastOrderDate != null" >
+        lst_last_order_date = #{lstLastOrderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lstLostDate != null" >
+        lst_lost_date = #{lstLostDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lstDelay != null" >
+        lst_delay = #{lstDelay,jdbcType=VARCHAR},
+      </if>
+      <if test="lstReason != null" >
+        lst_reason = #{lstReason,jdbcType=VARCHAR},
+      </if>
+      <if test="lstStatus != null" >
+        lst_status = #{lstStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lst_id = #{lstId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lmgd.customer.model.CstLost" >
+    update cst_lost
+    set lst_cust_no = #{lstCustNo,jdbcType=VARCHAR},
+      lst_cust_name = #{lstCustName,jdbcType=VARCHAR},
+      lst_cust_manager_id = #{lstCustManagerId,jdbcType=BIGINT},
+      lst_cust_manager_name = #{lstCustManagerName,jdbcType=VARCHAR},
+      lst_last_order_date = #{lstLastOrderDate,jdbcType=TIMESTAMP},
+      lst_lost_date = #{lstLostDate,jdbcType=TIMESTAMP},
+      lst_delay = #{lstDelay,jdbcType=VARCHAR},
+      lst_reason = #{lstReason,jdbcType=VARCHAR},
+      lst_status = #{lstStatus,jdbcType=VARCHAR}
+    where lst_id = #{lstId,jdbcType=BIGINT}
+  </update>
+</mapper>

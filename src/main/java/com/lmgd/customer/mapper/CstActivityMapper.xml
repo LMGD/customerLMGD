@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgd.customer.mapper.CstActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.lmgd.customer.model.CstActivity" >
+    <constructor >
+      <idArg column="atv_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="atv_cust_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="atv_cust_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="atv_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="atv_place" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="atv_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="atv_remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="atv_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    atv_id, atv_cust_no, atv_cust_name, atv_date, atv_place, atv_title, atv_remark, atv_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cst_activity
+    where atv_id = #{atvId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cst_activity
+    where atv_id = #{atvId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lmgd.customer.model.CstActivity" >
+    insert into cst_activity (atv_id, atv_cust_no, atv_cust_name, 
+      atv_date, atv_place, atv_title, 
+      atv_remark, atv_desc)
+    values (#{atvId,jdbcType=BIGINT}, #{atvCustNo,jdbcType=VARCHAR}, #{atvCustName,jdbcType=VARCHAR}, 
+      #{atvDate,jdbcType=TIMESTAMP}, #{atvPlace,jdbcType=VARCHAR}, #{atvTitle,jdbcType=VARCHAR}, 
+      #{atvRemark,jdbcType=VARCHAR}, #{atvDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmgd.customer.model.CstActivity" >
+    insert into cst_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="atvId != null" >
+        atv_id,
+      </if>
+      <if test="atvCustNo != null" >
+        atv_cust_no,
+      </if>
+      <if test="atvCustName != null" >
+        atv_cust_name,
+      </if>
+      <if test="atvDate != null" >
+        atv_date,
+      </if>
+      <if test="atvPlace != null" >
+        atv_place,
+      </if>
+      <if test="atvTitle != null" >
+        atv_title,
+      </if>
+      <if test="atvRemark != null" >
+        atv_remark,
+      </if>
+      <if test="atvDesc != null" >
+        atv_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="atvId != null" >
+        #{atvId,jdbcType=BIGINT},
+      </if>
+      <if test="atvCustNo != null" >
+        #{atvCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="atvCustName != null" >
+        #{atvCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="atvDate != null" >
+        #{atvDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="atvPlace != null" >
+        #{atvPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="atvTitle != null" >
+        #{atvTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="atvRemark != null" >
+        #{atvRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="atvDesc != null" >
+        #{atvDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmgd.customer.model.CstActivity" >
+    update cst_activity
+    <set >
+      <if test="atvCustNo != null" >
+        atv_cust_no = #{atvCustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="atvCustName != null" >
+        atv_cust_name = #{atvCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="atvDate != null" >
+        atv_date = #{atvDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="atvPlace != null" >
+        atv_place = #{atvPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="atvTitle != null" >
+        atv_title = #{atvTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="atvRemark != null" >
+        atv_remark = #{atvRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="atvDesc != null" >
+        atv_desc = #{atvDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where atv_id = #{atvId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lmgd.customer.model.CstActivity" >
+    update cst_activity
+    set atv_cust_no = #{atvCustNo,jdbcType=VARCHAR},
+      atv_cust_name = #{atvCustName,jdbcType=VARCHAR},
+      atv_date = #{atvDate,jdbcType=TIMESTAMP},
+      atv_place = #{atvPlace,jdbcType=VARCHAR},
+      atv_title = #{atvTitle,jdbcType=VARCHAR},
+      atv_remark = #{atvRemark,jdbcType=VARCHAR},
+      atv_desc = #{atvDesc,jdbcType=VARCHAR}
+    where atv_id = #{atvId,jdbcType=BIGINT}
+  </update>
+</mapper>

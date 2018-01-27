@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引入外部配置文件 -->
+    <!--这里不需要了，applicationContext.xml已经配了。 -->
+   <!-- <properties resource="jdbc.properties"/>-->
+
+    <settings>
+        <setting name="logImpl" value="SLF4J"/>
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!-- 别名 -->
+    <typeAliases>
+        <!--<typeAlias type="com.lmgd.oa.model.Book" alias="Book"/>-->
+    </typeAliases>
+
+    <!--将pagehelper插件配置到mybatis中-->
+    <!-- 配置分页插件PageHelper, 4.0.0以后的版本支持自动识别使用的数据库 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        </plugin>
+    </plugins>
+
+
+    <!-- spring和MyBatis整合 里面已经自动扫描了*.xml-->
+   <!-- <mappers>
+        <mapper resource="com/lmgd/oa/mapper/BookMapper.xml"/>
+    </mappers>-->
+</configuration>

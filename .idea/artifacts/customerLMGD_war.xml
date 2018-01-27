@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="customerLMGD:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="mvc01.war">
+      <element id="artifact" artifact-name="customerLMGD:war exploded" />
+    </root>
+  </artifact>
+</component>

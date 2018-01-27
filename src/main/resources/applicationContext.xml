@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+    <!--1. 注解式开发 -->
+    <!--1) 注解驱动 -->
+    <context:annotation-config/>
+    <!--2) 用注解方式注入bean，并指定查找范围：com.zking.oa及子子孙孙包-->
+    <context:component-scan base-package="com.lmgd.customer"/>
+
+    <!--2. 引入外置jdbc配置文件 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"/>
+    </bean>
+
+    <!--3. dbcp2数据库连接池配置-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--初始连接数-->
+        <property name="initialSize" value="10"/>
+        <!--最大活动连接数-->
+        <property name="maxTotal" value="100"/>
+        <!--最大空闲连接数-->
+        <property name="maxIdle" value="50"/>
+        <!--最小空闲连接数-->
+        <property name="minIdle" value="10"/>
+        <!--设置为-1时，如果没有可用连接，连接池会一直无限期等待，直到获取到连接为止。-->
+        <!--如果设置为N（毫秒），则连接池会等待N毫秒，等待不到，则抛出异常-->
+        <property name="maxWaitMillis" value="-1"/>
+    </bean>
+
+    <!--4. spring和MyBatis整合 -->
+    <!--1) 创建sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 指定数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 指定mybatis核心配置文件 -->
+        <property name="configLocation" value="classpath:mybatis.cfg.xml"/>
+        <!-- 自动扫描XxxMapping.xml文件，**表示迭代查找 -->
+        <property name="mapperLocations" value="classpath:com/lmgd/customer/**/mapper/*.xml"/>
+    </bean>
+    <!--2) 自动扫描com/zking/oa/**/mapper下的所有XxxMapper接口(其实就是DAO接口)，并实现这些接口，-->
+    <!--   即可直接在程序中使用dao接口，不用再获取sqlsession对象-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--basePackage 属性是映射器接口文件的包路径。-->
+        <!--你可以使用分号或逗号 作为分隔符设置多于一个的包路径-->
+        <property name="basePackage" value="com/lmgd/customer/**/mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--5. 声明式事务配置开始 -->
+    <!--1) 开启自动代理 -->
+    <aop:aspectj-autoproxy/>
+
+    <!--2) 事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--3) 定义事务特性 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="list*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="do*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--4) 定义切入点 -->
+    <aop:config>
+        <!-- 定义一个切入点 -->
+        <!-- 分三部分理解 A B C D [* ][*..][*Biz][.*(..)] A:返回类型：*表示返回类型不限 B:包名和类名：即任意包下的以Biz结尾的类或接口
+            C:方法名和参数列表：任意方法名和参数类型和个数不限 -->
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Biz.*(..))"/>
+    </aop:config>
+    <!-- 声明式事务配置结束 -->
+
+
+    <!-- 使用ehcache缓存 -->
+    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="shared" value="true"></property>
+    </bean>
+    <!-- 默认是cacheManager -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="cacheManagerFactory"/>
+    </bean>
+
+</beans>

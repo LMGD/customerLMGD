@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgd.customer.mapper.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.lmgd.customer.model.SysUser" >
+    <constructor >
+      <idArg column="usr_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="usr_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="usr_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="usr_role_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="usr_flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    usr_id, usr_name, usr_password, usr_role_id, usr_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where usr_name = #{usrName,jdbcType=VARCHAR}
+  </select>
+
+    <select id="loadChcDueTo" resultType="java.lang.String" parameterType="long" >
+       select usr_name
+       from sys_user
+       where  usr_id= #{usrId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_user
+    where usr_id = #{usrId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lmgd.customer.model.SysUser" >
+    insert into sys_user (usr_id, usr_name, usr_password, 
+      usr_role_id, usr_flag)
+    values (#{usrId,jdbcType=BIGINT}, #{usrName,jdbcType=VARCHAR}, #{usrPassword,jdbcType=VARCHAR}, 
+      #{usrRoleId,jdbcType=BIGINT}, #{usrFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmgd.customer.model.SysUser" >
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usrId != null" >
+        usr_id,
+      </if>
+      <if test="usrName != null" >
+        usr_name,
+      </if>
+      <if test="usrPassword != null" >
+        usr_password,
+      </if>
+      <if test="usrRoleId != null" >
+        usr_role_id,
+      </if>
+      <if test="usrFlag != null" >
+        usr_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usrId != null" >
+        #{usrId,jdbcType=BIGINT},
+      </if>
+      <if test="usrName != null" >
+        #{usrName,jdbcType=VARCHAR},
+      </if>
+      <if test="usrPassword != null" >
+        #{usrPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usrRoleId != null" >
+        #{usrRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="usrFlag != null" >
+        #{usrFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmgd.customer.model.SysUser" >
+    update sys_user
+    <set >
+      <if test="usrName != null" >
+        usr_name = #{usrName,jdbcType=VARCHAR},
+      </if>
+      <if test="usrPassword != null" >
+        usr_password = #{usrPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usrRoleId != null" >
+        usr_role_id = #{usrRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="usrFlag != null" >
+        usr_flag = #{usrFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where usr_id = #{usrId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lmgd.customer.model.SysUser" >
+    update sys_user
+    set usr_name = #{usrName,jdbcType=VARCHAR},
+      usr_password = #{usrPassword,jdbcType=VARCHAR},
+      usr_role_id = #{usrRoleId,jdbcType=BIGINT},
+      usr_flag = #{usrFlag,jdbcType=INTEGER}
+    where usr_id = #{usrId,jdbcType=BIGINT}
+  </update>
+</mapper>
